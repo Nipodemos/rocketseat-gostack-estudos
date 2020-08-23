@@ -1,7 +1,7 @@
 import React, { useState, useCallback, FormEvent } from 'react';
 import { FiChevronRight } from 'react-icons/fi';
 import logoImage from '../../assets/logo.svg';
-import { Title, Form, Repositories } from './styles';
+import { Title, Form, Repositories, Error } from './styles';
 import api from '../../services/api';
 
 interface Repository {
@@ -16,16 +16,26 @@ interface Repository {
 const DashBoard: React.FC = () => {
   const [repositories, setRepositories] = useState<Repository[]>([]);
   const [newRepo, setNewRepo] = useState('');
+  const [inputError, setInputError] = useState('');
 
   const handleAddRepository = useCallback(
     async (event: FormEvent<HTMLFormElement>) => {
       event.preventDefault();
-      console.log('newRepo :>> ', newRepo);
-      const response = await api.get<Repository>(`/repos/${newRepo}`);
-      console.log('response :>> ', response);
-      const repository = response.data;
-      setRepositories(previousState => [...previousState, repository]);
-      setNewRepo('');
+      if (!newRepo) {
+        setInputError('Digite o autor/nome do repositório');
+        return;
+      }
+      try {
+        console.log('newRepo :>> ', newRepo);
+        const response = await api.get<Repository>(`/repos/${newRepo}`);
+        console.log('response :>> ', response);
+        const repository = response.data;
+        setRepositories(previousState => [...previousState, repository]);
+        setNewRepo('');
+        setInputError('');
+      } catch (error) {
+        setInputError('Erro na busca por esse repositório');
+      }
     },
     [newRepo],
   );
@@ -39,7 +49,7 @@ const DashBoard: React.FC = () => {
       <img src={logoImage} alt="Github explorer" />
       <Title>Dashboard</Title>
 
-      <Form onSubmit={handleAddRepository}>
+      <Form hasError={!!inputError} onSubmit={handleAddRepository}>
         <input
           value={newRepo}
           onChange={handleInputChange}
@@ -48,6 +58,7 @@ const DashBoard: React.FC = () => {
         />
         <button type="submit">Pesquisar</button>
       </Form>
+      {inputError && <Error>{inputError}</Error>}
       <Repositories>
         {repositories.map(repository => (
           <a key={repository.full_name} href="teste">
