@@ -1,4 +1,4 @@
-import React, { useState, useCallback, FormEvent } from 'react';
+import React, { useState, useCallback, FormEvent, useEffect } from 'react';
 import { FiChevronRight } from 'react-icons/fi';
 import logoImage from '../../assets/logo.svg';
 import { Title, Form, Repositories, Error } from './styles';
@@ -14,9 +14,24 @@ interface Repository {
 }
 
 const DashBoard: React.FC = () => {
-  const [repositories, setRepositories] = useState<Repository[]>([]);
+  const [repositories, setRepositories] = useState<Repository[]>(() => {
+    const storedValues = localStorage.getItem(
+      '@primeiro-projeto-react/repositories',
+    );
+    if (storedValues) {
+      return JSON.parse(storedValues);
+    }
+    return [];
+  });
   const [newRepo, setNewRepo] = useState('');
   const [inputError, setInputError] = useState('');
+
+  useEffect(() => {
+    localStorage.setItem(
+      '@primeiro-projeto-react/repositories',
+      JSON.stringify(repositories),
+    );
+  }, [repositories]);
 
   const handleAddRepository = useCallback(
     async (event: FormEvent<HTMLFormElement>) => {
