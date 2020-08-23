@@ -56,6 +56,7 @@ const DashBoard: React.FC = () => {
   );
 
   const handleInputChange = useCallback(event => {
+    setInputError('');
     setNewRepo(event.target.value);
   }, []);
 
