@@ -41,6 +41,7 @@
           "tsx": "never"
         }
       ],
+      "no-console": "off",
       "camelcase":"off",
       "prettier/prettier": "error"
     },
