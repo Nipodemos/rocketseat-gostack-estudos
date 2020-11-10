@@ -46,7 +46,8 @@
         "tsx": "never"
       }
     ],
-    "prettier/prettier": "warn"
+    "prettier/prettier": "warn",
+    "no-use-before-define": "off"
   },
   "settings": {
     "import/resolver": {
