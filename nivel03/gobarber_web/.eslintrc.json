@@ -47,7 +47,9 @@
       }
     ],
     "prettier/prettier": "warn",
-    "no-use-before-define": "off"
+    "no-use-before-define": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/prop-types": "off"
   },
   "settings": {
     "import/resolver": {
