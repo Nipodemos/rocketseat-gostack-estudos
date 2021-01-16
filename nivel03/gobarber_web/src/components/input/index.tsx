@@ -1,5 +1,5 @@
 import React, { InputHTMLAttributes } from 'react';
-import { IconBaseProps } from 'react-icons';
+import type { IconBaseProps } from 'react-icons';
 import { Container } from './styles';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {

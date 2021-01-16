@@ -9,10 +9,9 @@ const SignIn: React.FC = () => {
   return (
     <Container>
       <Content>
-        <h1>SignIn</h1>
         <img src={logoImg} alt="Logo do site" />
         <form>
-          <h1>Faça seu logon</h1>
+          <h1>Faça seu login</h1>
           <Input icon={FiMail} name="email" type="text" placeholder="Email" />
           <Input
             icon={FiLock}
